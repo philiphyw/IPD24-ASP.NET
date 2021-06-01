@@ -8,27 +8,25 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace day02RazorBookList.Pages.BookList
 {
-    public class CreateModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ApplicationDbContext _db;
+        public Book Book { get; set; }
 
-        public CreateModel(ApplicationDbContext db)
+        public DeleteModel(ApplicationDbContext db)
         {
             _db = db;
         }
-        //once bindproperty, will assume below object will be pass to the  public async Task<IActionResult> OnPost() as parameter
-        [BindProperty]
-        public Book Book { get; set; }
-
-        public void OnGet()
+        public async Task OnGet(int id)
         {
+            Book = await _db.Book.FindAsync(id);
         }
 
-        public async Task<IActionResult> OnPost() 
+        public async Task<IActionResult> OnPost()
         {
             if (ModelState.IsValid)
             {
-                await _db.Book.AddAsync(Book);
+                 _db.Book.Remove(Book);
                 await _db.SaveChangesAsync();
                 return RedirectToPage("Index");
             }
@@ -40,4 +38,3 @@ namespace day02RazorBookList.Pages.BookList
         }
     }
 }
-
