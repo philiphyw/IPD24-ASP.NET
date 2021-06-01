@@ -45,7 +45,7 @@
                         </td>
                         <td>
                             <!--Without the line asp-route-id, the delete/edit will get no record-->
-                            <a asp-page="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm text-white">Delete</a>
+                            <Button asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('Please confirm to delete this record')" class="btn btn-danger btn-sm text-white">Delete</Button>
                             <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm text-white">Edit</a>
                         </td>
                     </tr>
